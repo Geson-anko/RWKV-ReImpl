@@ -3,10 +3,10 @@ import torch.nn as nn
 from torch import Tensor
 
 class ChannelMixing(nn.Module):
-    def __init__(self, dim: int, len: int):
+    def __init__(self, len: int, dim: int):
         super().__init__()
-        self.dim = dim
         self.len = len
+        self.dim = dim
         self.Wk = nn.Linear(dim, dim, bias=False)
         self.Wr = nn.Linear(dim, dim, bias=False)
         self.Wv = nn.Linear(dim, dim, bias=False)
