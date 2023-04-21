@@ -3,9 +3,8 @@ import torch.nn as nn
 from torch import Tensor
 
 class ChannelMixing(nn.Module):
-    def __init__(self, len: int, dim: int):
+    def __init__(self, dim: int):
         super().__init__()
-        self.len = len
         self.dim = dim
         self.Wk = nn.Linear(dim, dim, bias=False)
         self.Wr = nn.Linear(dim, dim, bias=False)
@@ -19,13 +18,14 @@ class ChannelMixing(nn.Module):
 
     # (len, dim) -> (len, dim)
     def forward(self, x: Tensor) -> Tensor:
+        len = x.shape[0]
         if self.last_x_mix_k is None:
             self.last_x_mix_k = torch.randn(self.dim)
         mix_k = self.sigmoid(self.mix_k)
-        mix_k_progression = torch.pow(mix_k, torch.arange(self.len).unsqueeze(-1)) # (len, dim)
-        fft_mix_k_progression = torch.fft.rfft(mix_k_progression, n=self.len*2, dim=0)
-        fft_x = torch.fft.rfft(x, n=self.len*2, dim=0)
-        x_conv_mix_k_progression = torch.fft.irfft(fft_x*fft_mix_k_progression, dim=0).narrow(0,0,self.len)
+        mix_k_progression = torch.pow(mix_k, torch.arange(len).unsqueeze(-1)) # (len, dim)
+        fft_mix_k_progression = torch.fft.rfft(mix_k_progression, n=len*2, dim=0)
+        fft_x = torch.fft.rfft(x, n=len*2, dim=0)
+        x_conv_mix_k_progression = torch.fft.irfft(fft_x*fft_mix_k_progression, dim=0).narrow(0,0,len)
         x_mix_k = self.last_x_mix_k * mix_k_progression * mix_k + (1-mix_k) * x_conv_mix_k_progression
         k = self.Wk(x_mix_k)
         self.last_x_mix_k = x_mix_k
@@ -33,10 +33,10 @@ class ChannelMixing(nn.Module):
         if self.last_x_mix_r is None:
             self.last_x_mix_r = torch.randn(self.dim)
         mix_r = self.sigmoid(self.mix_r)
-        mix_r_progression = torch.pow(mix_r, torch.arange(self.len).unsqueeze(-1)) # (len, dim)
-        fft_mix_r_progression = torch.fft.rfft(mix_r_progression, n=self.len*2, dim=0)
-        fft_x = torch.fft.rfft(x, n=self.len*2, dim=0)
-        x_conv_mix_r_progression = torch.fft.irfft(fft_x*fft_mix_r_progression, dim=0).narrow(0,0,self.len)
+        mix_r_progression = torch.pow(mix_r, torch.arange(len).unsqueeze(-1)) # (len, dim)
+        fft_mix_r_progression = torch.fft.rfft(mix_r_progression, n=len*2, dim=0)
+        fft_x = torch.fft.rfft(x, n=len*2, dim=0)
+        x_conv_mix_r_progression = torch.fft.irfft(fft_x*fft_mix_r_progression, dim=0).narrow(0,0,len)
         x_mix_r = self.last_x_mix_r * mix_r_progression * mix_r + (1-mix_r) * x_conv_mix_r_progression
         r = self.Wr(x_mix_r)
         self.last_x_mix_r = x_mix_r
