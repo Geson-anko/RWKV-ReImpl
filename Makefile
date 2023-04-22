@@ -33,4 +33,4 @@ docker-build:
 	docker build . -t rwkv-reimpl:latest --no-cache
 
 docker-run:
-	docker run -it --gpus all -v $(CURDIR):/workspace -w /workspace rwkv-reimpl:latest
+	docker run -it --gpus all --mount type=volume,source=rwkv-reimpl,target=/workspace rwkv-reimpl:latest
