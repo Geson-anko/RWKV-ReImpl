@@ -1,5 +1,0 @@
-pytest
-pyrootutils
-hydra-core
-lightning
-hydra-colorlog
