@@ -1,22 +1,25 @@
-## What does this PR do?
+## 概要
 
-<!--
-Please include a summary of the change and which issue is fixed.
-Please also include relevant motivation and context.
-List any dependencies that are required for this change.
-List all the breaking changes introduced by this pull request.
--->
+<!-- 変更の目的 もしくは 関連する Issue 番号 -->
 
-Fixes #\<issue_number>
+## 変更内容
 
-## Before submitting
+<!-- ビューの変更がある場合はスクショによる比較などがあるとわかりやすい -->
 
-- [ ] Did you make sure **title is self-explanatory** and **the description concisely explains the PR**?
-- [ ] Did you make sure your **PR does only one thing**, instead of bundling different changes together?
-- [ ] Did you list all the **breaking changes** introduced by this pull request?
-- [ ] Did you **test your PR locally** with `pytest` command?
-- [ ] Did you **run pre-commit hooks** with `pre-commit run -a` command?
+## 影響範囲
 
-## Did you have fun?
+<!-- この関数を変更したのでこの機能にも影響がある、など -->
 
-Make sure you had fun coding 🙃
+## Submit前の確認項目
+
+<!-- PRをSubmitする前に確認する項目 -->
+
+- [ ] タイトルは一目でわかるようにし、説明文は PR を簡潔に説明するようにしましたか?
+- [ ] あなたの PR が、異なる変更を束ねたものではなく、ひとつのことだけを行うものであることを確認しましたか?
+- [ ] この PR で導入されたすべての変更点をリストアップしましたか?
+- [ ] PR を `pytest`または `make test`コマンドでローカルにテストしましたか?
+- [ ] `pre-commit run -a` または`make format`コマンドで `pre-commit` フックを実行しましたか?
+
+## 補足
+
+<!-- レビューをする際に見てほしい点、ローカル環境で試す際の注意点、など -->
