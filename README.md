@@ -13,32 +13,14 @@ RWKVを再現実装し、その性能を確かめます。
 
 ```bash
 # clone project
-git clone https://github.com/YourGithubName/your-repo-name
-cd your-repo-name
-
-# [OPTIONAL] create conda environment
-conda create -n myenv python=3.10
-conda activate myenv
+git clone https://github.com/Geson-anko/RWKV-ReImpl.git
+cd RWKV-ReImpl
 
 # install pytorch according to instructions
 # https://pytorch.org/get-started/
 
 # install requirements
 pip install -r requirements.txt
-```
-
-#### Conda
-
-```bash
-# clone project
-git clone https://github.com/YourGithubName/your-repo-name
-cd your-repo-name
-
-# create conda environment and install dependencies
-conda env create -f environment.yaml -n myenv
-
-# activate conda environment
-conda activate myenv
 ```
 
 ## How to run
