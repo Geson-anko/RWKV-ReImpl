@@ -1,6 +1,8 @@
-import torch
 import pytest
+import torch
+
 from src.models.components.channel_mixing import ChannelMixing
+
 
 @pytest.mark.parametrize(
     """
@@ -8,10 +10,10 @@ from src.models.components.channel_mixing import ChannelMixing
     dim,
     """,
     [
-        (1024,512),
-        (1024,1024),
-        (2048,1024),
-    ]
+        (1024, 512),
+        (1024, 1024),
+        (2048, 1024),
+    ],
 )
 def test_channel_mixing(len, dim):
     channel_mixing = ChannelMixing(dim)
