@@ -28,3 +28,9 @@ test-full: ## Run all tests
 
 train: ## Train the model
 	python src/train.py
+
+docker-build:
+	docker build . -t rwkv-reimpl:latest --no-cache
+
+docker-run:
+	docker run -it --gpus all --mount type=volume,source=rwkv-reimpl,target=/workspace rwkv-reimpl:latest
