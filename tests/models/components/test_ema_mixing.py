@@ -3,6 +3,7 @@ import torch
 
 from src.models.components.ema_mixing import EMAMixing
 
+
 @pytest.mark.parametrize(
     """
     len,

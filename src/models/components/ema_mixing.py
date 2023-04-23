@@ -2,6 +2,7 @@ import torch
 import torch.nn as nn
 from torch import Tensor
 
+
 class EMAMixing(nn.Module):
     def __init__(self, dim: int):
         super().__init__()
@@ -10,6 +11,7 @@ class EMAMixing(nn.Module):
         self.factor = nn.Parameter(torch.rand(dim))
         self.sigmoid = nn.Sigmoid()
         self.x_mix_last = None
+
     # (len, dim) -> (len, dim)
     def forward(self, x: Tensor):
         len = x.shape[0]
@@ -23,8 +25,8 @@ class EMAMixing(nn.Module):
             0, 0, len
         )
         x_mix = (
-            self.x_mix_last * factor_progression * factor + (1 - factor) * x_conv_factor_progression
+            self.x_mix_last * factor_progression * factor
+            + (1 - factor) * x_conv_factor_progression
         )
         self.x_mix_last = x_mix
         return self.W(x_mix)
-
