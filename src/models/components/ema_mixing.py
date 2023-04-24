@@ -13,7 +13,7 @@ class EMAMixing(nn.Module):
         self.x_mix_last = None
 
     # (len, dim) -> (len, dim)
-    def forward(self, x: Tensor):
+    def forward(self, x: Tensor) -> Tensor:
         len = x.shape[0]
         if self.x_mix_last is None:
             self.x_mix_last = torch.randn(self.dim)
