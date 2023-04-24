@@ -28,5 +28,5 @@ class EMAMixing(nn.Module):
             self.x_mix_last * factor_progression * factor
             + (1 - factor) * x_conv_factor_progression
         )
-        self.x_mix_last = x_mix
+        self.x_mix_last = x_mix[-1]
         return self.W(x_mix)
