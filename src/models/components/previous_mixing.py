@@ -2,6 +2,7 @@ import torch
 import torch.nn as nn
 from torch import Tensor
 
+
 class PreviousMixing(nn.Module):
     def __init__(self, dim: int):
         super().__init__()
@@ -16,4 +17,4 @@ class PreviousMixing(nn.Module):
         x_shift = x.roll(shifts=1, dims=0)
         x_shift[0] = self.x_last
         self.x_last = x[-1]
-        return x * self.mix_factor + x_shift * (1-self.mix_factor)
+        return x * self.mix_factor + x_shift * (1 - self.mix_factor)
