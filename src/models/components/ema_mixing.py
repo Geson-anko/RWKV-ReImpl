@@ -16,7 +16,7 @@ class EMAMixing(nn.Module):
     def forward(self, x: Tensor) -> Tensor:
         len = x.shape[0]
         if self.x_mix_last is None:
-            self.x_mix_last = torch.randn(self.dim)
+            self.clear_hidden()
         factor = self.sigmoid(self.factor)
         factor_progression = torch.pow(factor, torch.arange(len).unsqueeze(-1))
         fft_factor_progression = torch.fft.rfft(factor_progression, n=len * 2, dim=0)
@@ -30,3 +30,6 @@ class EMAMixing(nn.Module):
         )
         self.x_mix_last = x_mix[-1]
         return self.W(x_mix)
+
+    def clear_hidden(self):
+        self.x_mix_last = torch.zeros(self.dim)

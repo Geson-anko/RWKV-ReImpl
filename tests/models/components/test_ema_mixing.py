@@ -20,4 +20,7 @@ def test_ema_mixing(len, dim):
     x = torch.rand(len, dim)
     x = ema_mixing(x)
     x = ema_mixing(x)
+    ema_mixing.clear_hidden()
+    x = ema_mixing(x)
+    x = ema_mixing(x)
     assert x.size() == torch.Size([len, dim])

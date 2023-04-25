@@ -20,4 +20,7 @@ def test_channel_mixing(len, dim):
     x = torch.rand(len, dim)
     x = channel_mixing(x)
     x = channel_mixing(x)
+    channel_mixing.clear_hidden()
+    x = channel_mixing(x)
+    x = channel_mixing(x)
     assert x.size() == torch.Size([len, dim])

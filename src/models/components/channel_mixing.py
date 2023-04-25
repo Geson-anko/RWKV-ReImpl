@@ -19,3 +19,7 @@ class ChannelMixing(nn.Module):
     def forward(self, x: Tensor) -> Tensor:
         vk = self.Wv(torch.pow(self.relu(self.previous_mixing_k(x)), 2))
         return self.sigmoid(self.previous_mixing_r(x)) * vk
+
+    def clear_hidden(self):
+        self.previous_mixing_k.clear_hidden()
+        self.previous_mixing_r.clear_hidden()

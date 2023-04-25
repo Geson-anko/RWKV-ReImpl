@@ -20,4 +20,7 @@ def test_previous_mixing(len, dim):
     x = torch.rand(len, dim)
     x = previous_mixing(x)
     x = previous_mixing(x)
+    previous_mixing.clear_hidden()
+    x = previous_mixing(x)
+    x = previous_mixing(x)
     assert x.size() == torch.Size([len, dim])
