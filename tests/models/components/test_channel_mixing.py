@@ -17,10 +17,12 @@ from src.models.components.channel_mixing import ChannelMixing
 )
 def test_channel_mixing(len, dim):
     channel_mixing = ChannelMixing(dim)
-    x = torch.rand(len, dim)
+    other_axes = torch.randint(1, 4, (torch.randint(1, 3, (1,)).item(),))
+    shape = (len, *other_axes, dim)
+    x = torch.rand(shape)
     x = channel_mixing(x)
     x = channel_mixing(x)
     channel_mixing.clear_hidden()
     x = channel_mixing(x)
     x = channel_mixing(x)
-    assert x.size() == torch.Size([len, dim])
+    assert x.size() == shape

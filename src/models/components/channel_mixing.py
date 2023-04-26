@@ -15,7 +15,7 @@ class ChannelMixing(nn.Module):
         self.sigmoid = nn.Sigmoid()
         self.relu = nn.ReLU()
 
-    # (len, dim) -> (len, dim)
+    # (len, *, dim) -> (len, *, dim)
     def forward(self, x: Tensor) -> Tensor:
         vk = self.Wv(torch.pow(self.relu(self.previous_mixing_k(x)), 2))
         return self.sigmoid(self.previous_mixing_r(x)) * vk
