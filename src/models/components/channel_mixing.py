@@ -2,7 +2,7 @@ import torch
 import torch.nn as nn
 from torch import Tensor
 
-from src.models.components.previous_mixing import PreviousMixing
+from .previous_mixing import PreviousMixing
 
 
 class ChannelMixing(nn.Module):
