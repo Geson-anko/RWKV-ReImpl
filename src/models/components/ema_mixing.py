@@ -7,7 +7,6 @@ class EMAMixing(nn.Module):
     def __init__(self, dim: int):
         super().__init__()
         self.dim = dim
-        self.W = nn.Linear(dim, dim, bias=False)
         self.factor = nn.Parameter(torch.rand(dim))
         self.sigmoid = nn.Sigmoid()
         self.x_mix_last = None
@@ -33,7 +32,7 @@ class EMAMixing(nn.Module):
             + (1 - factor) * x_conv_factor_progression
         )
         self.x_mix_last = x_mix[-1]
-        return self.W(x_mix)
+        return x_mix
 
     def clear_hidden(self):
         self.x_mix_last = None
