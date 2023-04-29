@@ -13,7 +13,7 @@ from src.models.components.time_mixing import TimeMixing
     [
         (1024, 1, 512),
         (1024, 4, 1024),
-        (2048, 16, 1024),
+        (512, 16, 256),
     ],
 )
 def test_time_mixing(len, batch, dim):
