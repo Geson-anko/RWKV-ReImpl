@@ -1,7 +1,8 @@
 """Train the sentencepiece tokenizer on the training data."""
-import sentencepiece as spm
-from argparse import ArgumentParser
 import os
+from argparse import ArgumentParser
+
+import sentencepiece as spm
 
 
 def get_argument_parser() -> ArgumentParser:
@@ -22,7 +23,7 @@ def get_argument_parser() -> ArgumentParser:
 
 def main():
     """Train the tokenizer."""
-    print("Working on:",os.getcwd())
+    print("Working on:", os.getcwd())
     args = get_argument_parser().parse_args()
 
     spm.SentencePieceTrainer.Train(
