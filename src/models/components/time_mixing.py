@@ -55,7 +55,6 @@ class TimeMixing(nn.Module):
         ).narrow(
             0, 0, len
         )  # (len, batch, dim)
-        exp_w = torch.exp(w)
         denominator = (
             self.denominator_last.unsqueeze(0) * exp_w_progression.unsqueeze(1) * exp_w
             + conv_ewp_ek
