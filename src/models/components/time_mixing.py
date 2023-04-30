@@ -17,6 +17,9 @@ class TimeMixing(nn.Module):
         self.w = nn.Parameter(torch.rand(dim))
         self.u = nn.Parameter(torch.rand(dim))
         self.sigmoid = nn.Sigmoid()
+        self.Wk = nn.Linear(dim, dim, bias=False)
+        self.Wv = nn.Linear(dim, dim, bias=False)
+        self.Wr = nn.Linear(dim, dim, bias=False)
 
     # (len, batch, dim) -> (len, batch, dim)
     def forward(self, x: Tensor) -> Tensor:
@@ -29,9 +32,9 @@ class TimeMixing(nn.Module):
                 x.shape[1:], dtype=x.dtype, device=x.device
             )  # (batch, dim)
         len = x.shape[0]
-        k = self.p_mix_k(x)
-        v = self.p_mix_v(x)
-        r = self.p_mix_r(x)
+        k = self.Wk(self.p_mix_k(x))
+        v = self.Wv(self.p_mix_v(x))
+        r = self.Wr(self.p_mix_r(x))
         w = -torch.exp(self.w)
         exp_w = torch.exp(w)
         exp_w_progression = torch.exp(
