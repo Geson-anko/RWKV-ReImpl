@@ -42,9 +42,9 @@ class TimeMixing(nn.Module):
         )  # (len, dim)
         exp_k = torch.exp(k)
         exp_k_v = exp_k * v
-        fft_exp_w_progression = torch.fft.rfft(exp_w_progression, n=len * 2, dim=0)  # (?, dim)
-        fft_exp_k = torch.fft.rfft(exp_k, n=len * 2, dim=0)  # (?, batch, dim)
-        fft_exp_k_v = torch.fft.rfft(exp_k_v, n=len * 2, dim=0)  # (?, batch, dim)
+        fft_exp_w_progression = torch.fft.rfft(exp_w_progression, n=len * 2, dim=0)  # (len+1, dim)
+        fft_exp_k = torch.fft.rfft(exp_k, n=len * 2, dim=0)  # (len+1, batch, dim)
+        fft_exp_k_v = torch.fft.rfft(exp_k_v, n=len * 2, dim=0)  # (len+1, batch, dim)
         conv_ewp_ek = torch.fft.irfft(
             fft_exp_w_progression.unsqueeze(1) * fft_exp_k, dim=0
         ).narrow(
