@@ -39,9 +39,9 @@ def test__iter__(
     mock_sentencepieceprocessor: MagicMock,
     ctx_len,
 ):
-    mock = mock_sentencepieceprocessor
-    mock().EncodeAsIds.return_value = [0, 1, 2, 3, 4, 5, 6]  # Instance is always same object.
-    mock().pad_id.return_value = -1
+    mock = mock_sentencepieceprocessor()  # Mock instance is always same object.
+    mock.EncodeAsIds.return_value = [0, 1, 2, 3, 4, 5, 6]
+    mock.pad_id.return_value = -1
     sp_model_path = "dummy_sp_model_path"
 
     wiki_ds = SPTokenizingWikiDataset(
