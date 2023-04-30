@@ -1,12 +1,15 @@
 """This file prepares config fixtures for other tests."""
 
 from pathlib import Path
+from unittest.mock import MagicMock
 
 import pyrootutils
 import pytest
 from hydra import compose, initialize
 from hydra.core.global_hydra import GlobalHydra
 from omegaconf import DictConfig, open_dict
+from pytest_mock import MockerFixture
+from sentencepiece import SentencePieceProcessor
 
 
 @pytest.fixture(scope="package")
@@ -98,3 +101,15 @@ def dummy_text_data_dir(tmp_path: Path) -> Path:
             f.write(f"dummy text\n<tag {i}>")
 
     return tmpdir
+
+
+@pytest.fixture(scope="function")
+def mock_sentencepieceprocessor(mocker: MockerFixture) -> MagicMock:
+    """If this fixture is used, internal sentence piece module is automatically mocked and returns
+    dummy values.
+
+    Returns:
+        mock: mocked sentence piece processor.
+    """
+    mock = mocker.patch("sentencepiece.SentencePieceProcessor", spec=SentencePieceProcessor)
+    return mock

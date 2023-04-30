@@ -1,4 +1,5 @@
 from pathlib import Path
+from unittest.mock import MagicMock
 
 import hydra
 from hydra.core.hydra_config import HydraConfig
@@ -42,3 +43,7 @@ def test_dummy_text_data_dir(dummy_text_data_dir: Path):
         fp = dummy_text_data_dir / f"dummy_text_{i}.txt"
         with open(fp) as f:
             assert f.read() == f"dummy text\n<tag {i}>"
+
+
+def test_mock_sentencepieceprocessor(mock_sentencepieceprocessor: MagicMock):
+    assert isinstance(mock_sentencepieceprocessor, MagicMock)
