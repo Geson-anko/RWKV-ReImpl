@@ -74,3 +74,6 @@ class TimeMixing(nn.Module):
     def clear_hidden(self):
         self.numerator_last = None
         self.denominator_last = None
+        self.p_mix_k.clear_hidden()
+        self.p_mix_v.clear_hidden()
+        self.p_mix_r.clear_hidden()
