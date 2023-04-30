@@ -105,11 +105,8 @@ def dummy_text_data_dir(tmp_path: Path) -> Path:
 
 @pytest.fixture(scope="function")
 def mock_sentencepieceprocessor(mocker: MockerFixture) -> MagicMock:
-    """If this fixture is used, internal sentence piece module is automatically mocked and returns
-    dummy values.
-
+    """
     Returns:
         mock: mocked sentence piece processor.
     """
-    mock = mocker.patch("sentencepiece.SentencePieceProcessor", spec=SentencePieceProcessor)
-    return mock
+    return mocker.MagicMock(spec=SentencePieceProcessor)
