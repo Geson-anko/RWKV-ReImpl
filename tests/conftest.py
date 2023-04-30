@@ -1,5 +1,7 @@
 """This file prepares config fixtures for other tests."""
 
+from pathlib import Path
+
 import pyrootutils
 import pytest
 from hydra import compose, initialize
@@ -79,3 +81,20 @@ def cfg_eval(cfg_eval_global, tmp_path) -> DictConfig:
     yield cfg
 
     GlobalHydra.instance().clear()
+
+
+@pytest.fixture
+def dummy_text_data_dir(tmp_path: Path) -> Path:
+    """Create dummy text files and return datadir.
+
+    Returns:
+        datadir: dummy data directory.
+    """
+    tmpdir = tmp_path / "dummy_text_data_dir"
+    tmpdir.mkdir()
+
+    for i in range(10):
+        with open(tmpdir / f"dummy_text_{i}.txt", "w") as f:
+            f.write(f"dummy text\n<tag {i}>")
+
+    return tmpdir
