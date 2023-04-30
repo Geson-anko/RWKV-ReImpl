@@ -20,18 +20,20 @@ class SPTokenizingWikiDataset(IterableDataset):
     Note: This class can not be parallelized.
     """
 
-    def __init__(self, data_dirs: Sequence[str], sp_model_path: Any, ctx_len: int):
+    def __init__(
+        self, data_dirs: Sequence[str], ctx_len: int, sp_processor: spm.SentencePieceProcessor
+    ):
         """Initialize SPTokenizingWikiDataset.
 
         Args:
             data_dirs: data directories that have wiki corpus text files.
-            sp_model_path: sentencepiece model path.
             ctx_len: context length.
+            sp_processor: sentencepiece processor.
         """
         super().__init__()
         self.data_dirs = data_dirs
-        self.sp_model_path = sp_model_path
         self.ctx_len = ctx_len
+        self.sp_processor = sp_processor
 
         dp = IterableWrapper(data_dirs)
         dp = FileLister(dp, recursive=True)
@@ -41,8 +43,6 @@ class SPTokenizingWikiDataset(IterableDataset):
         dp = Filter(dp, lambda x: ignoring_chars.sub("", x[1]) != "")
 
         self.datapipe = dp
-
-        self.sp_processor = spm.SentencePieceProcessor(model_file=sp_model_path)
 
     def __iter__(self) -> Iterator:
         """Read texts until `self.ctx_len`."""

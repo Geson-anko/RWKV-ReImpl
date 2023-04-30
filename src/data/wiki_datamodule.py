@@ -17,9 +17,7 @@ class WikiDataModule(LightningDataModule):
 
     def __init__(
         self,
-        data_dirs: list[str],
-        sp_model_path: str,
-        ctx_len: int,
+        dataset: SPTokenizingWikiDataset,
         batch_size: int = 64,
         pin_memory: bool = False,
     ):
@@ -38,16 +36,7 @@ class WikiDataModule(LightningDataModule):
         # also ensures init params will be stored in ckpt
         self.save_hyperparameters(logger=False)
 
-        self.data_train: Optional[IterableDataset] = None
-
-    def setup(self, stage: Optional[str] = None) -> None:
-        """Load data and sentencepiece model."""
-        if self.data_train is None:
-            self.data_train = SPTokenizingWikiDataset(
-                data_dirs=self.hparams.data_dirs,
-                sp_model_path=self.hparams.sp_model_path,
-                ctx_len=self.hparams.ctx_len,
-            )
+        self.data_train = dataset
 
     def train_dataloader(self) -> DataLoader:
         return DataLoader(
