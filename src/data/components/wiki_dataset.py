@@ -3,6 +3,7 @@ import re
 from typing import Any, Iterator, Sequence
 
 import sentencepiece as spm
+import torch
 from torch.utils.data import IterableDataset
 from torchdata.datapipes.iter import (
     FileLister,
@@ -52,8 +53,9 @@ class SPTokenizingWikiDataset(IterableDataset):
             remained_ids += ids
 
             while len(remained_ids) >= self.ctx_len:
-                yield remained_ids[: self.ctx_len]
+                yield torch.tensor(remained_ids[: self.ctx_len], dtype=torch.int64)
                 remained_ids = remained_ids[self.ctx_len :]
         if len(remained_ids) != 0:
             pad_len = self.ctx_len - len(remained_ids)
-            yield remained_ids + [self.sp_processor.pad_id()] * pad_len
+            out = remained_ids + [self.sp_processor.pad_id()] * pad_len
+            yield torch.tensor(out, dtype=torch.int64)

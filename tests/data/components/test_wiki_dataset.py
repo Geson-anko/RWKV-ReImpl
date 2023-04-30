@@ -2,8 +2,7 @@ from pathlib import Path
 from unittest.mock import MagicMock, NonCallableMagicMock
 
 import pytest
-from pytest_mock import MockerFixture
-from sentencepiece import SentencePieceProcessor
+import torch
 from torchdata.datapipes.iter import IterDataPipe
 
 from src.data.components.wiki_dataset import SPTokenizingWikiDataset
@@ -50,3 +49,5 @@ def test__iter__(
 
     for ids in wiki_ds:
         assert len(ids) == ctx_len
+        assert isinstance(ids, torch.Tensor)
+        assert ids.dtype == torch.int64
