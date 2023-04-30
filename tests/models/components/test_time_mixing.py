@@ -22,6 +22,8 @@ def test_time_mixing(len, batch, dim):
     x = time_mixing(x)
     x = time_mixing(x)
     time_mixing.clear_hidden()
+    assert time_mixing.numerator_last is None
+    assert time_mixing.denominator_last is None
     x = time_mixing(x)
     x = time_mixing(x)
     assert x.size() == torch.Size([len, batch, dim])
