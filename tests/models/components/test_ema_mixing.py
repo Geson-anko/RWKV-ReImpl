@@ -19,9 +19,13 @@ from src.models.components.ema_mixing import EMAMixing
 def test_ema_mixing(len, batch, dim):
     ema_mixing = EMAMixing(dim)
     x = torch.rand(len, batch, dim)
+    assert ema_mixing.x_mix_last is None
     x = ema_mixing(x)
+    assert ema_mixing.x_mix_last is not None
     x = ema_mixing(x)
     ema_mixing.clear_hidden()
+    assert ema_mixing.x_mix_last is None
     x = ema_mixing(x)
+    assert ema_mixing.x_mix_last is not None
     x = ema_mixing(x)
     assert x.size() == torch.Size([len, batch, dim])
