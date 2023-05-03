@@ -6,12 +6,12 @@ from .rwkv import RWKV
 
 
 class RWKVLang(nn.Module):
-    def __init__(self, dim: int, depth: int, vocab_size: int):
+    def __init__(self, model: nn.Module, dim: int, vocab_size: int):
         super().__init__()
         self.embedding = nn.Embedding(vocab_size, dim)
         self.layernorm_out = nn.LayerNorm(dim)
         self.linear_out = nn.Linear(dim, vocab_size)
-        self.rwkv = RWKV(dim, depth)
+        self.rwkv = model
 
     # (len, batch) -> (len, batch, vocab_size)
     def forward(self, x: Tensor):
