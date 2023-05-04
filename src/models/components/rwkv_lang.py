@@ -8,6 +8,9 @@ from .rwkv import RWKV
 class RWKVLang(nn.Module):
     def __init__(self, model: nn.Module, dim: int, vocab_size: int):
         super().__init__()
+        self.dim = dim
+        self.vocab_size = vocab_size
+
         self.embedding = nn.Embedding(vocab_size, dim)
         self.layernorm_out = nn.LayerNorm(dim)
         self.linear_out = nn.Linear(dim, vocab_size)
@@ -19,7 +22,7 @@ class RWKVLang(nn.Module):
         x = self.rwkv(x)
         x = self.layernorm_out(x)
         x = self.linear_out(x)
-        return x.softmax(dim=-1)
+        return x
 
     def clear_hidden(self):
         self.rwkv.clear_hidden()
