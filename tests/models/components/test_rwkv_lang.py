@@ -21,6 +21,9 @@ from src.models.components.rwkv_lang import RWKVLang
 )
 def test_rwkv_lang(len, batch, dim, depth, vocab_size):
     rwkv_lang = RWKVLang(RWKV(dim, depth), dim, vocab_size)
+    assert rwkv_lang.vocab_size == vocab_size
+    assert rwkv_lang.dim == dim
+
     x = torch.randint(vocab_size, (len, batch))
     y = rwkv_lang(x)
     y = rwkv_lang(x)
