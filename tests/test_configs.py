@@ -1,9 +1,12 @@
+from functools import partial
 from pathlib import Path
 from unittest.mock import MagicMock
 
 import hydra
 from hydra.core.hydra_config import HydraConfig
 from omegaconf import DictConfig
+from torch.optim import Adam
+from torch.optim.lr_scheduler import LambdaLR
 
 
 def test_train_config(cfg_train: DictConfig):
@@ -47,3 +50,14 @@ def test_dummy_text_data_dir(dummy_text_data_dir: Path):
 
 def test_mock_sentencepieceprocessor(mock_sentencepieceprocessor: MagicMock):
     assert isinstance(mock_sentencepieceprocessor, MagicMock)
+
+
+def test_partial_adam_optimizer(partial_adam_optimizer: partial[Adam]):
+    assert partial_adam_optimizer
+    assert partial_adam_optimizer.func == Adam
+    assert partial_adam_optimizer.keywords == {"lr": 0.001}
+
+
+def test_partial_lambda_lr_scheduler(partial_lambda_lr_scheduler: partial[LambdaLR]):
+    assert partial_lambda_lr_scheduler
+    assert partial_lambda_lr_scheduler.func == LambdaLR
