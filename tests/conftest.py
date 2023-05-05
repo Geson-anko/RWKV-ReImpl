@@ -121,7 +121,7 @@ def mock_sentencepieceprocessor(mocker: MockerFixture) -> MagicMock:
 
 
 @pytest.fixture(scope="function")
-def partial_adam_optimizer() -> MagicMock:
+def partial_adam_optimizer() -> partial[Adam]:
     """
     Returns:
         mock: partial instance of adam optimizer.
@@ -130,7 +130,7 @@ def partial_adam_optimizer() -> MagicMock:
 
 
 @pytest.fixture(scope="function")
-def partial_lambda_lr_scheduler() -> LambdaLR:
+def partial_lambda_lr_scheduler() -> partial[LambdaLR]:
     """
     Returns:
         mock: partial instance of lambda lr scheduler.
