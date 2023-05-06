@@ -1,5 +1,7 @@
 """This file prepares config fixtures for other tests."""
 
+from datetime import datetime
+from functools import partial
 from pathlib import Path
 from unittest.mock import MagicMock
 
@@ -7,9 +9,15 @@ import pyrootutils
 import pytest
 from hydra import compose, initialize
 from hydra.core.global_hydra import GlobalHydra
+from lightning.pytorch.loggers import MLFlowLogger
 from omegaconf import DictConfig, open_dict
+from pyrootutils import find_root
 from pytest_mock import MockerFixture
 from sentencepiece import SentencePieceProcessor
+from torch.optim import Adam
+from torch.optim.lr_scheduler import LambdaLR
+
+root_dir = find_root(indicator=".project-root")
 
 
 @pytest.fixture(scope="package")
@@ -110,3 +118,31 @@ def mock_sentencepieceprocessor(mocker: MockerFixture) -> MagicMock:
         mock: mocked sentence piece processor.
     """
     return mocker.MagicMock(spec=SentencePieceProcessor)
+
+
+@pytest.fixture(scope="function")
+def partial_adam_optimizer() -> partial[Adam]:
+    """
+    Returns:
+        mock: partial instance of adam optimizer.
+    """
+    return partial(Adam, lr=0.001)
+
+
+@pytest.fixture(scope="function")
+def partial_lambda_lr_scheduler() -> partial[LambdaLR]:
+    """
+    Returns:
+        mock: partial instance of lambda lr scheduler.
+    """
+    return partial(LambdaLR, lr_lambda=lambda epoch: 0.95**epoch)
+
+
+@pytest.fixture(scope="function")
+def mlflow_logger() -> MLFlowLogger:
+    """
+    Returns:
+        mlflow_logger: mlflow logger.
+    """
+    save_dir = root_dir / "logs" / "test_mlflow_logging" / datetime.now().strftime("%Y%m%d-%H%M%S")
+    return MLFlowLogger(experiment_name="test", save_dir=save_dir)
