@@ -1,0 +1,24 @@
+# @package _global_
+
+defaults:
+  - override /data: wiki.yaml
+  - override /model: rwkv_wiki.yaml
+  - override /callbacks: rwkv.yaml
+  - override /trainer: default.yaml
+  - override /logger: mlflow.yaml
+
+task_name: "rwkv_wiki"
+
+tags: ["rwkv", "wiki"]
+
+seed: 12345
+
+trainer:
+  max_steps: 100000
+  precision: 32
+
+# logger:
+#   mlflow:
+#     tags: ${tags}
+
+test: False
