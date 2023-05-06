@@ -40,7 +40,7 @@ class SPTokenizingWikiDataset(IterableDataset):
         dp = FileOpener(dp, encoding="utf-8")
         dp = LineReader(dp)
         self._ignoring_chars_ptrn = re.compile(r"^<[^>]*>$\n?|^$\n?")
-        
+
         dp = Filter(dp, self._filter_func)
 
         self.datapipe = dp
