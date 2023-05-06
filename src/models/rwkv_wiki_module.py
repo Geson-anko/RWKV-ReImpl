@@ -98,10 +98,8 @@ class RWKVWikiLitModule(LightningModule):
 
         # update and log metrics
         self.train_loss_avg(loss)
-        self.log(
-            "train/loss_avg", self.train_loss_avg, on_step=False, on_epoch=True, prog_bar=True
-        )
-        self.log("train/loss", loss)
+        self.log("train/loss_avg", self.train_loss_avg, prog_bar=True)
+        self.log("train/loss", loss, prog_bar=True)
 
         # return loss or backpropagation will fail
         return loss
