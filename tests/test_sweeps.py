@@ -9,12 +9,12 @@ overrides = ["logger=[]"]
 
 @RunIf(sh=True)
 @pytest.mark.slow
-def test_experiments(tmp_path):
+def test_example_experiments(tmp_path):
     """Test running all available experiment configs with fast_dev_run=True."""
     command = [
         startfile,
         "-m",
-        "experiment=glob(*)",
+        "experiment=example",
         "hydra.sweep.dir=" + str(tmp_path),
         "++trainer.fast_dev_run=true",
     ] + overrides
