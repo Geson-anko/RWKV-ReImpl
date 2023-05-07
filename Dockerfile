@@ -11,4 +11,5 @@ RUN git config --global --add safe.directory /workspace
 RUN npm install n -g
 RUN n 15.14.0
 RUN apt purge -y nodejs npm
-RUN pip install -r requirements.txt
+RUN pip uninstall -y torch torchvision torchaudio \
+    && pip install -r requirements.txt
