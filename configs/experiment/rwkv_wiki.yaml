@@ -15,7 +15,7 @@ seed: 12345
 
 trainer:
   max_steps: 100000
-  precision: 32
+  precision: "bf16-mixed"
   max_epochs: null
 
 # logger:
@@ -23,3 +23,5 @@ trainer:
 #     tags: ${tags}
 
 test: False
+
+float32_matmul_precision: "medium"

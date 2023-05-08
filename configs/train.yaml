@@ -50,3 +50,7 @@ ckpt_path: null
 
 # seed for random number generators in pytorch, numpy and python.random
 seed: null
+
+# matmul precision. If the GPU has Tensor Cores, this can be set to `high` or `medium`, otherwise it must be `highest`.
+# See https://pytorch.org/docs/stable/generated/torch.set_float32_matmul_precision.html#torch.set_float32_matmul_precision
+float32_matmul_precision: null
