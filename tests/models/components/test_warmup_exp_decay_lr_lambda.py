@@ -21,6 +21,7 @@ def test__init__(warmup_exp_decay_lr_lambda: WarmupExpDecayLRLambda):
     assert warmup_exp_decay_lr_lambda.max_lr == 0.2
     assert warmup_exp_decay_lr_lambda.final_lr == 0.001
     assert warmup_exp_decay_lr_lambda.warmup_steps == 10
+    assert warmup_exp_decay_lr_lambda.max_steps == 100
     assert warmup_exp_decay_lr_lambda.gamma == pytest.approx(0.005 ** (1 / 90), rel=1e-6)
 
 
