@@ -16,7 +16,7 @@ class WarmupExpDecayLRLambda:
         max_lr: float,
         final_lr: float,
         warmup_steps: int,
-        gamma: float,
+        max_steps: float,
     ) -> None:
         """Initialize WarmupExpDecayLRLambda class.
 
@@ -26,14 +26,15 @@ class WarmupExpDecayLRLambda:
             max_lr (float): Maximum learning rate. Returned at the last step of warmup.
             final_lr (float): Final learning rate. Returned after decay ends.
             warmup_steps (int): Warmup steps.
-            gamma (float): Decay rate.
+            max_steps (float): Maximum steps in training.
         """
         self.base_lr = base_lr
         self.init_lr = init_lr
         self.max_lr = max_lr
         self.final_lr = final_lr
         self.warmup_steps = warmup_steps
-        self.gamma = gamma
+        self.max_steps = max_steps
+        self.gamma = (final_lr / max_lr) ** (1 / (max_steps - warmup_steps))
 
     def __call__(self, epoch: int) -> Any:
         """Call WarmupExpDecayLRLambda class.
