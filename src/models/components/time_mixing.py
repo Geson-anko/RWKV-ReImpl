@@ -38,7 +38,7 @@ class TimeMixing(nn.Module):
         w = -torch.exp(self.w)
         exp_w = torch.exp(w)
         exp_w_progression = torch.exp(
-            w.unsqueeze(0) * torch.arange(len).unsqueeze(1)
+            w.unsqueeze(0) * torch.arange(len, device=w.device, dtype=w.dtype).unsqueeze(1)
         )  # (len, dim)
         exp_k = torch.exp(k)
         exp_k_v = exp_k * v

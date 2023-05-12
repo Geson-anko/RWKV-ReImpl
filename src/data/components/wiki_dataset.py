@@ -39,10 +39,19 @@ class SPTokenizingWikiDataset(IterableDataset):
         dp = FileLister(dp, recursive=True)
         dp = FileOpener(dp, encoding="utf-8")
         dp = LineReader(dp)
-        ignoring_chars = re.compile(r"^<[^>]*>$\n?|^$\n?")
-        dp = Filter(dp, lambda x: ignoring_chars.sub("", x[1]) != "")
+        self._ignoring_chars_ptrn = re.compile(r"^<[^>]*>$\n?|^$\n?")
+
+        dp = Filter(dp, self._filter_func)
 
         self.datapipe = dp
+
+    def _filter_func(self, data: tuple[Any, str]) -> bool:
+        """Filter function for filtering empty lines."""
+        _, text = data
+        if self._ignoring_chars_ptrn.sub("", text) != "":
+            return True
+        else:
+            return False
 
     def __iter__(self) -> Iterator:
         """Read texts until `self.ctx_len`."""

@@ -1,0 +1,11 @@
+_target_: src.data.wiki_datamodule.WikiDataModule
+batch_size: 16
+pin_memory: True
+dataset:
+  _target_: src.data.components.wiki_dataset.SPTokenizingWikiDataset
+  data_dirs:
+    - ${paths.data_dir}/WikiCorpusJa/text
+  sp_processor:
+    _target_: sentencepiece.SentencePieceProcessor
+    model_file: ${paths.data_dir}/WikiCorpusJa/sp_tokenizer_32k.model
+  ctx_len: 1024

@@ -1,0 +1,33 @@
+_target_: src.models.rwkv_wiki_module.RWKVWikiLitModule
+
+optimizer:
+  _target_: torch.optim.Adam
+  _partial_: true
+  lr: 8e-4
+  betas: [0.9, 0.99]
+  eps: 1e-8
+
+net:
+  _target_: src.models.components.rwkv_lang.RWKVLang
+  dim: 512
+  vocab_size: 32768
+  model:
+    _target_: src.models.components.rwkv_lang.RWKV
+    dim: ${..dim}
+    depth: 6
+
+monitoring_text_dataset:
+  _target_: src.data.components.text_dataset.SPTokenizingTextDataset
+  data_dirs:
+    - ${paths.root_dir}/monitoring_texts
+  sp_processor:
+    _target_: sentencepiece.SentencePieceProcessor
+    model_file: ${paths.data_dir}/WikiCorpusJa/sp_tokenizer_32k.model
+  max_len: 1024
+  ignoring_chars: "\n"
+  replacement: " "
+  list_file_recusively: true
+
+monitoring_interval: 100
+monitoring_n_samples: 10
+num_generating_tokens: 512
