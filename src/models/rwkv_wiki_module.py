@@ -146,7 +146,9 @@ class RWKVWikiLitModule(LightningModule):
 
         mlf: MlflowClient = self.logger.experiment
         mlf.log_text(
-            self.logger.run_id, "\n".join(log_texts), f"generated_texts_step{self.global_step}.txt"
+            self.logger.run_id,
+            "\n".join(log_texts),
+            f"generated_texts_step{self.global_step:012d}.txt",
         )
 
     def configure_optimizers(self):
