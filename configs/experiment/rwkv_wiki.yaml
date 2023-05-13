@@ -15,13 +15,13 @@ seed: null # 42 is used in determisitic mode of the original implementation.
 
 data:
   dataset:
-    ctx_len: 1024 # ~10M tokens at Japanese Wikipedia
+    ctx_len: 1024 # ~5G tokens in Japanese Wikipedia.
 
 model:
   scheduler:
     lr_lambda:
       init_lr: 1e-7 # ignored if warmup_steps is 0.
-      max_lr: 1e-4
+      max_lr: 8e-4
       final_lr: 1e-5
       warmup_steps: 0
       max_steps: 100000
