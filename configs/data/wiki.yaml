@@ -9,3 +9,4 @@ dataset:
     _target_: sentencepiece.SentencePieceProcessor
     model_file: ${paths.data_dir}/WikiCorpusJa/sp_tokenizer_32k.model
   ctx_len: 1024
+num_workers: 0 # always 0 or 1.

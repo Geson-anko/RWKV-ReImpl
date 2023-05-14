@@ -50,6 +50,9 @@ def train(cfg: DictConfig) -> Tuple[dict, dict]:
     if cfg.get("seed"):
         L.seed_everything(cfg.seed, workers=True)
 
+    if cfg.get("float32_matmul_precision"):
+        torch.set_float32_matmul_precision(cfg.float32_matmul_precision)
+
     log.info(f"Instantiating datamodule <{cfg.data._target_}>")
     datamodule: LightningDataModule = hydra.utils.instantiate(cfg.data)
 

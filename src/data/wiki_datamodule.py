@@ -8,7 +8,7 @@ from .components.wiki_dataset import SPTokenizingWikiDataset
 
 class WikiDataModule(LightningDataModule):
     """DataModule for Wikipedia dataset.
-    Note: This class can not be parallelized. So DataLoader `num_workers` is always 0.
+    Note: This class can not be parallelized. So DataLoader `num_workers` is always 0 or 1.
 
     Return Info:
         - shape: (batch_size, ctx_len)
@@ -20,6 +20,7 @@ class WikiDataModule(LightningDataModule):
         dataset: SPTokenizingWikiDataset,
         batch_size: int = 64,
         pin_memory: bool = False,
+        num_workers: int = 0,
     ):
         """Initialize WikiDataModule.
 
@@ -42,7 +43,7 @@ class WikiDataModule(LightningDataModule):
         return DataLoader(
             dataset=self.data_train,
             batch_size=self.hparams.batch_size,
-            num_workers=0,
+            num_workers=self.hparams.num_workers,
             pin_memory=self.hparams.pin_memory,
             shuffle=False,  # Can not shuffle because iterable dataset.
         )
