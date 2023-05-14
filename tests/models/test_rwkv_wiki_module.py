@@ -86,11 +86,14 @@ def test_model_step(rwkv_module: RWKVWikiLitModule, batch_size: int, ctx_len: in
     rwkv_module.net.clear_hidden()
     vs = rwkv_module.net.vocab_size
     batch = torch.randint(0, vs, (batch_size, ctx_len + 1))
-    loss, logits, preds = rwkv_module.model_step(batch)
+    loss, logits, preds, ce_loss, l2_loss = rwkv_module.model_step(batch)
 
     assert loss.shape == ()
     assert logits.shape == (batch_size, ctx_len, vs)
     assert preds.shape == (batch_size, ctx_len)
+    assert ce_loss.shape == ()
+    assert l2_loss.shape == ()
+    assert loss == ce_loss + l2_loss * rwkv_module.hparams.l2_loss_factor
 
     loss.backward()
 
