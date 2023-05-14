@@ -18,6 +18,8 @@ data:
     ctx_len: 1024 # ~5G tokens in Japanese Wikipedia.
 
 model:
+  optimizer:
+    weight_decay: 0.0001
   scheduler:
     lr_lambda:
       init_lr: 1e-7 # ignored if warmup_steps is 0.
