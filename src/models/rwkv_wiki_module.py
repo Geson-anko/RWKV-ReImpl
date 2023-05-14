@@ -28,6 +28,7 @@ class RWKVWikiLitModule(LightningModule):
         monitoring_interval: int = 1,  # Steps
         monitoring_n_samples: int = 5,
         num_generating_tokens: int = 1024,  # Per sample.
+        l2_loss_factor: float = 1e-4,
     ):
         """LightningModule for RWKV Wiki Corpus Language Modeling.
 
@@ -40,6 +41,7 @@ class RWKVWikiLitModule(LightningModule):
             monitoring_interval: Monitoring interval in steps.
             monitoring_n_samples: Number of samples to generate.
             num_generating_tokens: Number of tokens to generate per sample.
+            l2_loss_factor: Scale factor for L2 loss.
         """
         super().__init__()
 
@@ -80,9 +82,16 @@ class RWKVWikiLitModule(LightningModule):
         batch = batch.T
         x, y = batch[:-1], batch[1:].flatten()
         logits = self.forward(x)  # (len, batch, vocab_size)
-        loss = self.criterion(logits.view(len(y), -1), y)
+        ce_loss = self.criterion(logits.view(len(y), -1), y)
+
+        # to encourage the logits to be close to 0.
+        # See `L2Wrap` in https://github.com/BlinkDL/RWKV-LM/blob/main/RWKV-v4/src/model.py
+        l2_loss = torch.mean(logits.max(dim=-1)[0] ** 2) / logits.size(-1)
+
+        loss = ce_loss + l2_loss * self.hparams.l2_loss_factor
+
         preds = torch.argmax(logits, dim=-1).T  # (batch, len)
-        return loss, logits.transpose(1, 0), preds
+        return loss, logits.transpose(1, 0), preds, ce_loss, l2_loss
 
     def training_step(self, batch: Tensor, batch_idx: int) -> Tensor:
         """Training step.
@@ -94,12 +103,14 @@ class RWKVWikiLitModule(LightningModule):
         if hasattr(self.net, "clear_hidden"):
             self.net.clear_hidden()
 
-        loss, _, _ = self.model_step(batch)
+        loss, _, _, ce_loss, l2_loss = self.model_step(batch)
 
         # update and log metrics
         self.train_loss_avg(loss)
         self.log("train/loss_avg", self.train_loss_avg, prog_bar=True)
-        self.log("train/loss", loss, prog_bar=True)
+        self.log("train/loss", loss, prog_bar=False)
+        self.log("train/ce_loss", ce_loss, prog_bar=False)
+        self.log("train/l2_loss", l2_loss, prog_bar=False)
 
         # return loss or backpropagation will fail
         return loss
