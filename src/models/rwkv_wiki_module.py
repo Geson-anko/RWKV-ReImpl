@@ -86,7 +86,7 @@ class RWKVWikiLitModule(LightningModule):
 
         # to encourage the logits to be close to 0.
         # See `L2Wrap` in https://github.com/BlinkDL/RWKV-LM/blob/main/RWKV-v4/src/model.py
-        l2_loss = torch.mean(logits.max(dim=-1)[0] ** 2) / logits.size(-1)
+        l2_loss = 0.5 * torch.mean(logits.max(dim=-1)[0] ** 2) / logits.size(-1)
 
         loss = ce_loss + l2_loss * self.hparams.l2_loss_factor
 
