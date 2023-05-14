@@ -44,3 +44,4 @@ monitoring_text_dataset:
 monitoring_interval: 100
 monitoring_n_samples: 10
 num_generating_tokens: 512
+l2_loss_factor: 1e-4
