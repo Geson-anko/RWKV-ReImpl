@@ -59,7 +59,7 @@ def test_on_train_batch_end(mock_trainer):
 
     # Assert log_metrics was called once with expected arguments
     mock_trainer.logger.log_metrics.assert_called_once_with(
-        {"is_finite": True}, step=mock_trainer.global_step
+        {"is_finite": 1.0}, step=mock_trainer.global_step
     )
 
 
@@ -71,5 +71,5 @@ def test_on_train_epoch_end(mock_trainer):
 
     # Assert log_metrics was called once with expected arguments
     mock_trainer.logger.log_metrics.assert_called_once_with(
-        {"is_finite": True}, step=mock_trainer.global_step
+        {"is_finite": 1.0}, step=mock_trainer.global_step
     )

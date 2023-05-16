@@ -40,7 +40,8 @@ class FiniteChecks(Callback):
     def log_check_infinite(self, trainer: Trainer, pl_module: LightningModule) -> None:
         """Log the result of the check for infinite values."""
         trainer.logger.log_metrics(
-            {"is_finite": not self.check_infinite_parameters(pl_module)}, step=trainer.global_step
+            {"is_finite": float(not self.check_infinite_parameters(pl_module))},
+            step=trainer.global_step,
         )
 
     def on_train_batch_end(
