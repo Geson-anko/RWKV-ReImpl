@@ -3,6 +3,7 @@ defaults:
   - model_summary.yaml
   - rich_progress_bar.yaml
   - learning_rate_monitor.yaml
+  - finite_checks.yaml
   - _self_
 
 model_checkpoint:
@@ -16,3 +17,6 @@ model_checkpoint:
 
 model_summary:
   max_depth: -1
+
+finite_checks:
+  check_interval: 100 # steps
