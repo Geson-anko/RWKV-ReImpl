@@ -1,0 +1,4 @@
+finite_checks:
+  _target_: src.callbacks.finite_checks.FiniteChecks
+  check_interval: 100 # steps
+  check_on_epoch_end: True
