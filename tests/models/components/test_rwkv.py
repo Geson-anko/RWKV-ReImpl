@@ -12,9 +12,9 @@ from src.models.components.rwkv import RWKV
     depth,
     """,
     [
-        (1024, 1, 512, 2),
-        (1024, 4, 1024, 1),
-        (512, 16, 256, 3),
+        (1024, 1, 32, 2),
+        (1024, 4, 64, 1),
+        (512, 16, 16, 3),
     ],
 )
 def test_rwkv(len, batch, dim, depth):
