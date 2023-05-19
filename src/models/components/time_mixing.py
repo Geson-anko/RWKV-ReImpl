@@ -11,6 +11,8 @@ class TimeMixing(nn.Module):
         self.p_mix_k = PreviousMixing(dim)
         self.p_mix_v = PreviousMixing(dim)
         self.p_mix_r = PreviousMixing(dim)
+        self.register_buffer("numerator_last", None)
+        self.register_buffer("denominator_last", None)
         self.numerator_last = None
         self.denominator_last = None
         self.W_out = nn.Linear(dim, dim, bias=False)

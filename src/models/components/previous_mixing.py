@@ -8,6 +8,7 @@ class PreviousMixing(nn.Module):
         super().__init__()
         self.dim = dim
         self.mix_factor = nn.Parameter(torch.rand(dim))
+        self.register_buffer("x_last", None)
         self.x_last = None
 
     # (len, *, dim) -> (len, *, dim)

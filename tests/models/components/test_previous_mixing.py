@@ -23,6 +23,7 @@ def test_previous_mixing(len, dim):
     assert previous_mixing.x_last is None
     x = previous_mixing(x)
     assert previous_mixing.x_last is not None
+    assert "x_last" in previous_mixing.state_dict()
     x = previous_mixing(x)
     previous_mixing.clear_hidden()
     assert previous_mixing.x_last is None
