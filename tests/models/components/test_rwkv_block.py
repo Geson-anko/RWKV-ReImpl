@@ -11,9 +11,9 @@ from src.models.components.rwkv_block import RWKVBlock
     dim,
     """,
     [
-        (1024, 1, 512),
-        (1024, 4, 1024),
-        (512, 16, 256),
+        (1024, 1, 32),
+        (1024, 4, 64),
+        (512, 16, 16),
     ],
 )
 def test_rwkv_block(len, batch, dim):

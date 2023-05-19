@@ -28,6 +28,7 @@ net:
     _target_: src.models.components.rwkv_lang.RWKV
     dim: ${..dim}
     depth: 6
+    hidden_dim_factor: 4
 
 monitoring_text_dataset:
   _target_: src.data.components.text_dataset.SPTokenizingTextDataset

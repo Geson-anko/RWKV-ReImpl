@@ -14,9 +14,9 @@ from src.models.components.rwkv_lang import RWKVLang
     vocab_size,
     """,
     [
-        (1024, 1, 512, 2, 123),
-        (1024, 4, 1024, 1, 432),
-        (512, 16, 256, 3, 915),
+        (1024, 1, 32, 2, 123),
+        (1024, 4, 64, 1, 432),
+        (512, 16, 16, 3, 915),
     ],
 )
 def test_rwkv_lang(len, batch, dim, depth, vocab_size):

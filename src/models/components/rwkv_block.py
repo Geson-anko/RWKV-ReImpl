@@ -7,10 +7,10 @@ from .time_mixing import TimeMixing
 
 
 class RWKVBlock(nn.Module):
-    def __init__(self, dim: int):
+    def __init__(self, dim: int, hidden_dim_factor: int = 4):
         super().__init__()
         self.time_mixing = TimeMixing(dim)
-        self.channel_mixing = ChannelMixing(dim)
+        self.channel_mixing = ChannelMixing(dim, hidden_dim_factor)
         self.layer_norm = nn.LayerNorm(dim)
 
     # (len, batch, dim) -> (len, batch, dim)
