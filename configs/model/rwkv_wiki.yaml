@@ -45,3 +45,4 @@ monitoring_text_dataset:
 monitoring_interval: 100
 monitoring_n_samples: 10
 num_generating_tokens: 512
+do_init_weights: true # If learning from pre-trained model, set false.

@@ -28,6 +28,7 @@ class RWKVWikiLitModule(LightningModule):
         monitoring_interval: int = 1,  # Steps
         monitoring_n_samples: int = 5,
         num_generating_tokens: int = 1024,  # Per sample.
+        do_init_weights: bool = True,
     ):
         """LightningModule for RWKV Wiki Corpus Language Modeling.
 
@@ -40,6 +41,7 @@ class RWKVWikiLitModule(LightningModule):
             monitoring_interval: Monitoring interval in steps.
             monitoring_n_samples: Number of samples to generate.
             num_generating_tokens: Number of tokens to generate per sample.
+            do_init_weights: Whether to initialize weights by `net.init_weights()`.
         """
         super().__init__()
 
@@ -48,6 +50,9 @@ class RWKVWikiLitModule(LightningModule):
         self.save_hyperparameters(logger=False, ignore=["net", "monitoring_text_dataset"])
 
         self.net = net
+        if hasattr(self.net, "init_weights") and do_init_weights:
+            self.net.init_weights()
+
         self.monitoring_text_dataset = monitoring_text_dataset
 
         # loss function
