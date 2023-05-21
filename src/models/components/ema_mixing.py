@@ -9,6 +9,7 @@ class EMAMixing(nn.Module):
         self.dim = dim
         self.factor = nn.Parameter(torch.rand(dim))
         self.sigmoid = nn.Sigmoid()
+        self.register_buffer("x_mix_last", None)
         self.x_mix_last = None
 
     # (len, batch, dim) -> (len, batch, dim)

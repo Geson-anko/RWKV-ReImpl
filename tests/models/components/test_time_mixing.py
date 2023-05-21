@@ -24,6 +24,9 @@ def test_time_mixing(len, batch, dim):
     x = time_mixing(x)
     assert time_mixing.numerator_last is not None
     assert time_mixing.denominator_last is not None
+    assert "numerator_last" in time_mixing.state_dict()
+    assert "denominator_last" in time_mixing.state_dict()
+
     x = time_mixing(x)
     time_mixing.clear_hidden()
     assert time_mixing.numerator_last is None
