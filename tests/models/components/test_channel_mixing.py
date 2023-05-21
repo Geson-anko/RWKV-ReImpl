@@ -31,3 +31,18 @@ def test_channel_mixing(len, dim, hidden_dim_factor):
     x = channel_mixing(x)
     x = channel_mixing(x)
     assert x.size() == shape
+
+
+def test_init_weights():
+    channel_mixing = ChannelMixing(128, hidden_dim_factor=4)
+    channel_mixing.init_weights()
+    torch.testing.assert_close(
+        channel_mixing.Wv.weight, torch.zeros_like(channel_mixing.Wv.weight)
+    )
+    torch.testing.assert_close(
+        channel_mixing.Wr.weight, torch.zeros_like(channel_mixing.Wr.weight)
+    )
+    torch.testing.assert_close(
+        channel_mixing.Wk.weight.T @ channel_mixing.Wk.weight,
+        torch.eye(128) * channel_mixing.hidden_dim_factor,
+    )
