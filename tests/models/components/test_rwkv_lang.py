@@ -31,3 +31,16 @@ def test_rwkv_lang(len, batch, dim, depth, vocab_size):
     y = rwkv_lang(x)
     y = rwkv_lang(x)
     assert y.size() == torch.Size([len, batch, vocab_size])
+
+
+def test_init_weights():
+    rwkv_lang = RWKVLang(RWKV(128, 2), 128, 512)
+    rwkv_lang.init_weights()
+    torch.testing.assert_close(
+        rwkv_lang.embedding.weight.T @ rwkv_lang.embedding.weight,
+        torch.eye(128) * 1e-4**2 * 512,
+    )
+    torch.testing.assert_close(
+        rwkv_lang.linear_out.weight.T @ rwkv_lang.linear_out.weight,
+        torch.eye(128) * 0.5**2 * 512 / 128,
+    )
