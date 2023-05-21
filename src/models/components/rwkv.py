@@ -20,3 +20,7 @@ class RWKV(nn.Module):
     def clear_hidden(self):
         for block in self.block_list:
             block.clear_hidden()
+
+    def init_weights(self):
+        for block in self.block_list:
+            block.init_weights()

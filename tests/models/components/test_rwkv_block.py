@@ -18,6 +18,7 @@ from src.models.components.rwkv_block import RWKVBlock
 )
 def test_rwkv_block(len, batch, dim):
     rwkv_block = RWKVBlock(dim)
+    rwkv_block.init_weights()
     x = torch.rand(len, batch, dim)
     x = rwkv_block(x)
     x = rwkv_block(x)

@@ -19,6 +19,7 @@ from src.models.components.rwkv import RWKV
 )
 def test_rwkv(len, batch, dim, depth):
     rwkv = RWKV(dim, depth)
+    rwkv.init_weights()
     x = torch.rand(len, batch, dim)
     x = rwkv(x)
     x = rwkv(x)
