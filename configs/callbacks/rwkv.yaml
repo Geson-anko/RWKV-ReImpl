@@ -4,6 +4,7 @@ defaults:
   - rich_progress_bar.yaml
   - learning_rate_monitor.yaml
   - finite_checks.yaml
+  - nan_stopping.yaml
   - _self_
 
 model_checkpoint:
@@ -19,4 +20,8 @@ model_summary:
   max_depth: -1
 
 finite_checks:
+  check_interval: 100 # steps
+
+nan_stopping:
+  monitoring_metrics: "loss"
   check_interval: 100 # steps
