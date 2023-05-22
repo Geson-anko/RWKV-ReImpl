@@ -23,7 +23,7 @@ scheduler_update_frequecy: 1 # steps
 net:
   _target_: src.models.components.rwkv_lang.RWKVLang
   dim: 512
-  vocab_size: 32768
+  vocab_size: 32000
   model:
     _target_: src.models.components.rwkv_lang.RWKV
     dim: ${..dim}

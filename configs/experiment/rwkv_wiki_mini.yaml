@@ -21,7 +21,7 @@ data:
 model:
   net:
     dim: 64
-    vocab_size: 32768
+    vocab_size: 32000
     model:
       depth: 2
   num_generating_tokens: 32
