@@ -1,0 +1,4 @@
+nan_stopping:
+  _target_: src.callbacks.nan_stopping.NaNStopping
+  monitoring_metrics: "loss"
+  check_interval: 100 # steps
