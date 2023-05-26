@@ -26,3 +26,7 @@ class RWKVBlock(nn.Module):
     def clear_hidden(self):
         self.time_mixing.clear_hidden()
         self.channel_mixing.clear_hidden()
+
+    def init_weights(self):
+        self.time_mixing.init_weights()
+        self.channel_mixing.init_weights()

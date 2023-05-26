@@ -1,3 +1,5 @@
+import math
+
 import torch
 import torch.nn as nn
 from torch import Tensor
@@ -26,3 +28,12 @@ class RWKVLang(nn.Module):
 
     def clear_hidden(self):
         self.rwkv.clear_hidden()
+
+    def init_weights(self):
+        nn.init.orthogonal_(
+            self.embedding.weight, gain=1e-4 * math.sqrt(max(self.dim, self.vocab_size))
+        )
+        nn.init.orthogonal_(
+            self.linear_out.weight, gain=0.5 * math.sqrt(self.vocab_size / self.dim)
+        )
+        self.rwkv.init_weights()

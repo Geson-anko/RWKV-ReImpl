@@ -1,3 +1,5 @@
+import math
+
 import torch
 import torch.nn as nn
 from torch import Tensor
@@ -27,3 +29,8 @@ class ChannelMixing(nn.Module):
     def clear_hidden(self):
         self.previous_mixing_k.clear_hidden()
         self.previous_mixing_r.clear_hidden()
+
+    def init_weights(self):
+        nn.init.zeros_(self.Wv.weight)
+        nn.init.zeros_(self.Wr.weight)
+        nn.init.orthogonal_(self.Wk.weight, gain=math.sqrt(self.hidden_dim_factor))

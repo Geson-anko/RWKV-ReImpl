@@ -16,8 +16,8 @@ class TimeMixing(nn.Module):
         self.numerator_last = None
         self.denominator_last = None
         self.W_out = nn.Linear(dim, dim, bias=False)
-        self.w = nn.Parameter(torch.rand(dim))
-        self.u = nn.Parameter(torch.rand(dim))
+        self.w = nn.Parameter(torch.randn(dim))
+        self.u = nn.Parameter(torch.randn(dim))
         self.sigmoid = nn.Sigmoid()
         self.Wk = nn.Linear(dim, dim, bias=False)
         self.Wv = nn.Linear(dim, dim, bias=False)
@@ -78,3 +78,9 @@ class TimeMixing(nn.Module):
         self.p_mix_k.clear_hidden()
         self.p_mix_v.clear_hidden()
         self.p_mix_r.clear_hidden()
+
+    def init_weights(self):
+        nn.init.zeros_(self.Wk.weight)
+        nn.init.zeros_(self.Wr.weight)
+        nn.init.zeros_(self.W_out.weight)
+        nn.init.orthogonal_(self.Wv.weight, gain=1.0)
